@@ -14,9 +14,10 @@ import org.reflections.Reflections;
 public class Application {
 
 
-    static String path = "";
+    static String path = "file://D://common-1.0-SNAPSHOT.jar";
     public static void main(String[] args) {
         List<String> paths = loadJar(path);
+        loadClass(path);
     }
 
     /**
@@ -71,6 +72,7 @@ public class Application {
             URLClassLoader loader = new URLClassLoader(new URL[]{url},Thread.currentThread().getContextClassLoader());
             Reflections reflections = new Reflections("org.example.common",loader);
             Set<Class<? extends MyInterface>> subTypesOfMyInterface = reflections.getSubTypesOf(MyInterface.class);
+            int i = 0;
 //            try {
 //
 ////                Class<? extends MyInterface> tempClass = loader.
