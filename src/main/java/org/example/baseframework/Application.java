@@ -60,6 +60,10 @@ public class Application {
         }
     }
 
+    public void test(){
+
+    }
+
 
     public static void loadClass(String jarPath){
         jarPath = String.format("file://%s",jarPath);
