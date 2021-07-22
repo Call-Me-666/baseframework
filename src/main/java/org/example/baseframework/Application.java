@@ -1,6 +1,7 @@
 package org.example.baseframework;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -14,7 +15,7 @@ import org.reflections.Reflections;
 public class Application {
 
 
-    static String path = "file://D://common-1.0-SNAPSHOT.jar";
+    static String path = "D://common-1.0-SNAPSHOT.jar";
     public static void main(String[] args) {
         List<String> paths = loadJar(path);
         loadClass(path);
@@ -61,7 +62,7 @@ public class Application {
 
 
     public static void loadClass(String jarPath){
-
+        jarPath = String.format("file://%s",jarPath);
         URL url = null;
         try {
             url = new URL(jarPath);
@@ -73,12 +74,21 @@ public class Application {
             Reflections reflections = new Reflections("org.example.common",loader);
             Set<Class<? extends MyInterface>> subTypesOfMyInterface = reflections.getSubTypesOf(MyInterface.class);
             int i = 0;
-//            try {
-//
-////                Class<? extends MyInterface> tempClass = loader.
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            for (Class<? extends MyInterface> interf:subTypesOfMyInterface) {
+                try {
+//                    interf.get
+                    MyInterface inter = interf.getConstructor().newInstance();
+                    System.out.println(inter.getName());
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
